@@ -1,67 +1,27 @@
-# Automation with Docker for CI Workflows
+# httpenv
+Tiny HTTP server showing the environment variables on TCP 8888.
 
-[![Lint Code Base](https://github.com/bretfisher/docker-ci-automation/actions/workflows/call-super-linter.yaml/badge.svg)](https://github.com/bretfisher/docker-ci-automation/actions/workflows/call-super-linter.yaml)
+[![Lint Code Base](https://github.com/BretFisher/httpenv/actions/workflows/call-super-linter.yaml/badge.svg)](https://github.com/BretFisher/httpenv/actions/workflows/call-super-linter.yaml)
+[![Docker Build](https://github.com/BretFisher/httpenv/actions/workflows/call-docker-build.yaml/badge.svg)](https://github.com/BretFisher/httpenv/actions/workflows/call-docker-build.yaml)
 
-> For Docker Community All Hands 2022
 
-[![All-Hands Automation with Docker](https://user-images.githubusercontent.com/792287/160971371-0ae75c14-1ea4-4a11-82dc-f35f96184fa3.gif)](https://www.youtube.com/watch?v=aZzV6X7XhyI)
+Images for `linux/x86_64` (amd64), `linux/arm64` (v8), and `linux/arm/v7`
 
-Watch the walkthrough of this repo: [https://www.youtube.com/watch?v=aZzV6X7XhyI](https://www.youtube.com/watch?v=aZzV6X7XhyI)
+This can be used for various container learnings like how DNS round-robin works, rolling updates, etc.
+It can be easier to use than something large and resource hungary like elasticsearch, while still providing
+a way to check which container you're seeing in browser (or `curl`) by viewing the env vars it returns in HTTP.
 
-See this repositories' [`.github/workflows`](.github/workflows) directory for the below example workflows, ordered by number, simple to complex.
+Run it from Docker Hub on host port 8888:
 
-These examples are focused on five of Docker's [official GitHub Actions](https://github.com/marketplace?type=actions&query=publisher%3Adocker+).
+`docker run -d -p 8888:8888 bretfisher/httpenv`
 
-These examples are based on three workflow diagrams on progressively more complex automation pipelines:
+or from GitHub Container Registry (GHCR) with:
 
-1. [Basic code PR automation workflow](diagrams/basic-code-pr.png)
-2. [Intermediate code PR automation workflow](diagrams/intermediate-code-pr.png)
-3. [Advanced code PR automation workflow](diagrams/advanced-code-pr.png)
+`docker run -d -p 8888:8888 ghcr.io/bretfisher/httpenv`
 
-I also have a [LIVE course on learning GitHub Actions for DevOps automation and Argo CD](https://bret.courses/autodeploy) for GitOps-style deployments.
+If you `curl` it, you should get back its environment variables, including the container name:
 
-## Example Workflows
+```shell
+curl http://localhost:8888
 
-1. Basic Docker build
-2. Adding BuildKit cache
-3. Adding multi-platform builds
-4. Adding metadata to images
-5. Adding comments with image tags to PRs
-6. Adding CVE scanning
-7. Adding CVE security reporting
-8. Adding unit testing
-9. Adding integration testing
-10. Adding Kubernetes smoke tests
-11. Adding job parallelizing for mucho speed
-
-## GitHub Actions shown in these examples
-
-- [Docker Login](https://github.com/marketplace/actions/docker-login)
-- [Docker Setup Buildx](https://github.com/marketplace/actions/docker-setup-buildx)
-- [Docker Setup QEMU](https://github.com/marketplace/actions/docker-setup-qemu)
-- [Docker Metadata](https://github.com/marketplace/actions/docker-metadata-action)
-- [Docker Build and Push](https://github.com/marketplace/actions/build-and-push-docker-images)
-- [Aqua Security Trivy CVE Scan](https://github.com/marketplace/actions/aqua-security-trivy)
-- [Super-Linter](https://github.com/marketplace/actions/super-linter)
-- [Setup k3d](https://github.com/marketplace/actions/absaoss-k3d-action)
-- [Find Comment](https://github.com/marketplace/actions/find-comment)
-- [Create or Update Comment](https://github.com/marketplace/actions/create-or-update-comment)
-
-## This repository is part of my example DevOps repos on GitHub Actions
-
-- [bretfisher/github-actions-templates](https://github.com/BretFisher/github-actions-templates) - Main reusable templates repository
-- [bretfisher/super-linter-workflow](https://github.com/BretFisher/super-linter-workflow) - Reusable linter workflow
-- [bretfisher/docker-build-workflow](https://github.com/BretFisher/docker-build-workflow)- Reusable docker build workflow
-- (you are here) [bretfisher/docker-ci-automation](https://github.com/BretFisher/docker-ci-automation) - Step by step video and example of a Docker CI workflow
-- [My full list of container examples and tools](https://github.com/bretfisher)
-
-## More reading
-
-[Docker Build/Push Action advanced examples](https://github.com/docker/build-push-action/tree/master/docs/advanced)
-[My full list of container examples and tools](https://github.com/bretfisher)
-
-## 🎉🎉🎉 Join my container DevOps community 🎉🎉🎉
-
-- [My "Vital DevOps" Discord server](https://devops.fan)
-- [My weekly YouTube Live show](https://bret.live)
-- [My courses and coupons](https://www.bretfisher.com/courses)
+{"HOME":"/root","HOSTNAME":"c9d8d26bda3a","PATH":"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"}```

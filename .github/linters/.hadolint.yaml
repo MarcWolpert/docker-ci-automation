@@ -1,4 +1,3 @@
----
 # README: https://github.com/hadolint/hadolint
 
 # Often it's a good idea to do inline disables rather that repo-wide in this file.
@@ -15,6 +14,9 @@ ignored:
   - DL3022 #bad rule for COPY --from
   - DL3028 #gem install pin versions
   - DL3059 #multiple consecutive runs
+  - DL4006 #we don't need pipefail in this
+  - SC2016 #we want single quotes sometimes
+
 
 # FULL TEMPLATE
 # failure-threshold: string               # name of threshold level (error | warning | info | style | ignore | none)
