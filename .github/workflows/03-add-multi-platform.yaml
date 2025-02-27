@@ -14,6 +14,8 @@ jobs:
     steps:
 
 #NEW: (START) ##########################################################
+# this is to set up QEMU for multi-platform builds
+# qemu is a processor emulator that allows you to run a different architecture on your machine
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
 #NEW: (END) ############################################################
